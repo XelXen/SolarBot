@@ -2,7 +2,7 @@
 
 # Author: XelXen
 # License: GPL-3
-# Description: A simple chatbot for telegram using AI
+# Description: A simple AI chatbot for telegram
 # Last Modified: Febuary 26, 2023
 
 from pyrogram import Client, filters
@@ -10,14 +10,6 @@ from pyrogram.errors import UserNotParticipant
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from config_file import name, api_id, api_hash, instruction, knowledge, bot_token
 from os import environ
-
-if name == "":
-    try:
-        name = environ.get("name")
-    except Exception as e:
-        print(e)
-        print("'name' not defined")
-        exit()
 
 if api_id == "":
     try:
@@ -35,12 +27,20 @@ if api_hash == "":
         print("'api_hash' not defined")
         exit()
 
+if name == "":
+    try:
+        name = environ.get("name")
+    except Exception as e:
+        name = "SolarBot"
+        print(e)
+        print("using default name 'SolarBot' since 'name' not defined, ")
+
 if instruction == "":
     try:
         instruction = environ.get("instruction")
     except Exception as e:
         print(e)
-        print("'instruction' not defined")
+        print("Running bot without any specific instructions since 'instruction' not defined")
         exit()
 
 if knowledge == "":
@@ -48,7 +48,7 @@ if knowledge == "":
         knowledge = environ.get("knowledge")
     except Exception as e:
         print(e)
-        print("'knowledge' not defined")
+        print("Running bot without any personal knowledge since 'knowledge' not defined")
         exit()
 
 if bot_token == "":
